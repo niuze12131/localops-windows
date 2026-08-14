@@ -1,10 +1,10 @@
-# 总控台
+# localops-windows
 
 **Preview / Alpha · 源码预览**
 
-总控台是面向 Windows 的本地服务与批处理任务快速启动、运行监测工具。它把常用项目命令、长期服务和一次性批处理任务集中到本地网页中，并用 Python 3 标准库提供只绑定回环地址的后端；前端是无构建、无 CDN 的原生 HTML/CSS/JavaScript。
+localops-windows是面向 Windows 的本地服务与批处理任务快速启动、运行监测工具。它把常用项目命令、长期服务和一次性批处理任务集中到本地网页中，并用 Python 3 标准库提供只绑定回环地址的后端；前端是无构建、无 CDN 的原生 HTML/CSS/JavaScript。
 
-总控台只服务当前电脑和当前用户，不是远程运维、多人协作或公网管理面板。它能够以当前用户权限执行保存的命令；不要将监听地址、反向代理、SSH 隧道或端口映射暴露到不受信任的网络。
+localops-windows只服务当前电脑和当前用户，不是远程运维、多人协作或公网管理面板。它能够以当前用户权限执行保存的命令；不要将监听地址、反向代理、SSH 隧道或端口映射暴露到不受信任的网络。
 
 ## 功能
 
@@ -57,9 +57,9 @@ python server.py --preferred-port 9603  # 在 9600-9609 内指定优先端口
 
 启动后程序只绑定 `127.0.0.1`，从 9600 起尝试端口，被占用则递增（最多 10 个），并自动打开浏览器。命令行参数、环境变量（`CONSOLE_DATA_DIR` / `CONSOLE_LOG_DIR`）见下文“数据、隐私与备份”。
 
-**实际地址在哪里看**：顶栏「重启 :9600」按钮上直接显示当前端口；或看终端输出 / `%LOCALAPPDATA%\总控台\logs\console.log`。浏览器手动访问 `http://127.0.0.1:端口号/` 即可。
+**实际地址在哪里看**：顶栏「重启 :9600」按钮上直接显示当前端口；或看终端输出 / `%LOCALAPPDATA%\localops-windows\logs\console.log`。浏览器手动访问 `http://127.0.0.1:端口号/` 即可。
 
-**停止与重启**：顶栏「重启 / 停止」控制的是总控台自身（网页服务）。停止总控台**不会**停止启动台里已经运行的应用——它们是独立进程树，会继续运行；下次打开总控台时会自动重新识别。
+**停止与重启**：顶栏「重启 / 停止」控制的是localops-windows自身（网页服务）。停止localops-windows**不会**停止启动台里已经运行的应用——它们是独立进程树，会继续运行；下次打开localops-windows时会自动重新识别。
 
 ## 使用
 
@@ -82,7 +82,7 @@ python server.py --preferred-port 9603  # 在 9600-9609 内指定优先端口
 
 ### 日志中心（Ctrl+J）
 
-导航轨「日志中心」或快捷键 Ctrl+J：所有应用按运行中优先排列，点开任意一行看实时日志；底部固定总控台自身日志入口。
+导航轨「日志中心」或快捷键 Ctrl+J：所有应用按运行中优先排列，点开任意一行看实时日志；底部固定localops-windows自身日志入口。
 
 ### 设置中心
 
@@ -90,7 +90,7 @@ python server.py --preferred-port 9603  # 在 9600-9609 内指定优先端口
 
 ### 命令面板（Ctrl+K）
 
-全局搜索并执行：添加服务/任务、启动/停止/重启任意应用、打开页面、查看日志、切换视图、开关任务通知、查看总控台日志等。
+全局搜索并执行：添加服务/任务、启动/停止/重启任意应用、打开页面、查看日志、切换视图、开关任务通知、查看localops-windows日志等。
 
 ## 数据、隐私与备份
 
@@ -98,10 +98,10 @@ python server.py --preferred-port 9603  # 在 9600-9609 内指定优先端口
 
 | 路径 | 内容 | 备份建议 |
 | --- | --- | --- |
-| `%APPDATA%\总控台\config.json` | 应用命令、本地路径、端口、标记和运行识别信息 | 必须 |
-| `%APPDATA%\总控台\config.json.bak` | 上一份已知良好的配置 | 必须 |
-| `%APPDATA%\总控台\icons\` | 用户上传的图标和站点图标 | 按需 |
-| `%LOCALAPPDATA%\总控台\logs\` | 应用与总控台运行日志 | 通常不需 |
+| `%APPDATA%\localops-windows\config.json` | 应用命令、本地路径、端口、标记和运行识别信息 | 必须 |
+| `%APPDATA%\localops-windows\config.json.bak` | 上一份已知良好的配置 | 必须 |
+| `%APPDATA%\localops-windows\icons\` | 用户上传的图标和站点图标 | 按需 |
+| `%LOCALAPPDATA%\localops-windows\logs\` | 应用与localops-windows运行日志 | 通常不需 |
 
 Windows 下如果默认数据目录不可写，会自动改用项目内 `data` 目录，避免因权限问题启动失败。这些文件仍可能含个人路径、完整命令和日志内容；不应进入 Git，也不应随发行包或故障报告对外传播。
 
@@ -113,13 +113,13 @@ $env:CONSOLE_LOG_DIR = "D:\console-logs"
 python server.py
 ```
 
-自定义值必须是非空的绝对路径，并指向总控台专用的子目录。
+自定义值必须是非空的绝对路径，并指向localops-windows专用的子目录。
 
 ## 安全边界
 
 - 只添加你已检查且信任的命令和工作目录。
 - 不要将服务绑定到 `0.0.0.0`，不要通过反向代理、SSH 隧道或端口映射对外暴露。
-- 不要把 `%APPDATA%\总控台\config.json`、日志或故障截图未经脱敏就上传。
+- 不要把 `%APPDATA%\localops-windows\config.json`、日志或故障截图未经脱敏就上传。
 - 本地回环绑定只是第一层边界，不能替代写接口的 Host/Origin/控制令牌防护。
 
 ## 故障排查
@@ -127,12 +127,12 @@ python server.py
 ### 双击后没有界面
 
 - 确认 `python --version` 可用且符合要求。
-- 查看 `%LOCALAPPDATA%\总控台\logs\console.log`。
+- 查看 `%LOCALAPPDATA%\localops-windows\logs\console.log`。
 - 用 `python server.py` 从终端启动，直接查看错误。
 
 ### 9600 打不开
 
-程序可能已选择 9601–9609。查看终端输出或 `%LOCALAPPDATA%\总控台\logs\console.log` 中的实际地址。服务可访问时，`GET /api/health` 会返回程序版本、配置 schema 和降级原因。
+程序可能已选择 9601–9609。查看终端输出或 `%LOCALAPPDATA%\localops-windows\logs\console.log` 中的实际地址。服务可访问时，`GET /api/health` 会返回程序版本、配置 schema 和降级原因。
 
 ## 开发
 
